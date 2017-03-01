@@ -4,3 +4,4 @@
 都是浪费了
 
 Creating a new branch is quick.
+Creating a new branch is quick & simple.
