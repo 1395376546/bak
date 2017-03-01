@@ -16,3 +16,5 @@
     ！！！注 目前发现不用add添加到暂存区 commit就提交不了 log也不会有内容
     git commit -a -m '改动readme文件'(连添加带修改)
     cat readme.txt 查看文件内容
+    
+    首先确定要在哪个分支上修复bug，假定需要在master分支上修复，就从master创建临时分支：
