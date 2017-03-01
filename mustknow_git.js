@@ -13,4 +13,5 @@
     git reset --hard HEAD^   版本回退(上一个写^ 两个写^^ 100个写HEAD~100)
     git reset --hard 3628164  命令窗口没有关闭时  返回已经失去的版本(数字为commit id 不用写全  前几位就可以了)
     git reflog  找不到新版本的commit id怎么办
-
+    ！！！注 目前发现不用add添加到暂存区 commit就提交不了 log也不会有内容
+    cat readme.txt 查看文件内容
