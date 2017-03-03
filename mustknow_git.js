@@ -31,10 +31,68 @@
     git checkout -b dev 创建并切换分支
     git merge dev 切换到master 并把dev分支上的内容合并到master上面
     git branch -d dev 删除分支dev
+    git branch -D feature-vulcan 强行删除分支dev
     !!!注 merge完有冲突的时候 需要解决完冲突 再add commit
     git merge --no-ff -m "merge with no-ff" dev   
                 请注意--no-ff参数，表示禁用Fast forward(Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。) 
     
     !!!当在分支有修改不能提交，但是要临时修复bug，这时候就可以用
     git stash 可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作： 
+    git stash drop 来删除
+    
+    git remote -v 显示更详细的信息
+    git push origin master 推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上
+	    master分支是主分支，因此要时刻与远程同步；
+		dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+		bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+		feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发
 
+    git checkout -b dev origin/dev 你的小伙伴要在dev分支上开发，就必须创建远程origin的dev分支到本地
+    git push origin dev 时不时地把dev分支push到远程
+    git pull 推送失败，先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送
+
+    git tag 查看所有tag 
+    git tag v1.0 打标签(通常用来代替commit id)，默认标签是打在最新提交的commit上的
+    git tag v0.9 6224937 忘记打标签的时候 先用log 查看commit id ，然后找到相应的id 打标签
+    git show v0.1 可以看到说明文字
+
+    git config --global alias.st status  我们只需要敲一行命令，告诉Git，以后st就表示status
+    									 给命令创建别名
+	git config --global alias.co checkout 
+	git config --global alias.ci commit
+	git config --global alias.br branch
+
+	配置文件放哪了？每个仓库的Git配置文件都放在.git/config文件中
+
+	搭建Git服务器需要准备一台运行Linux的机器，强烈推荐用Ubuntu或Debian，这样
+	通过几条简单的apt命令就可以完成安装。
+	假设你已经有sudo权限的用户账号，下面，正式开始安装。
+		第一步，安装git：
+			$ sudo apt-get install git
+		第二步，创建一个git用户，用来运行git服务：
+			$ sudo adduser git
+		第三步，创建证书登录：
+		收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pub文件，把所有公钥导入到/home/git/.ssh/authorized_keys文件里，一行一个。
+		第四步，初始化Git仓库：
+		先选定一个目录作为Git仓库，假定是/srv/sample.git，在/srv目录下输入命令：
+			$ sudo git init --bare sample.git
+		Git就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的Git仓库纯粹是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的Git仓库通常都以.git结尾。然后，把owner改为git：
+			$ sudo chown -R git:git sample.git
+		第五步，禁用shell登录：
+		出于安全考虑，第二步创建的git用户不允许登录shell，这可以通过编辑/etc/passwd文件完成。找到类似下面的一行：
+			git:x:1001:1001:,,,:/home/git:/bin/bash
+			改为：
+			git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+		这样，git用户可以正常通过ssh使用git，但无法登录shell，因为我们为git用户指定的git-shell每次一登录就自动退出。
+		第六步，克隆远程仓库：
+		现在，可以通过git clone命令克隆远程仓库了，在各自的电脑上运行：
+			$ git clone git@server:/srv/sample.git
+			Cloning into 'sample'...
+			warning: You appear to have cloned an empty repository.
+
+		剩下的推送就简单了
+    
+    git gui里面乱码的问题
+	    需要在config里面设置utf-8
+        [gui]
+	    encoding = utf-8
