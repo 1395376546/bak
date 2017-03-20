@@ -107,8 +107,9 @@
             git commit -m '123'
             git checkout master
             git push (输入自己的账号及密码) 提交成功
-
-
-
+        4.》!!!本地推送到服务器
+                git add filename
+                git commit -m ""
+                git push 
 
 
