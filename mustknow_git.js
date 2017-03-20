@@ -96,3 +96,19 @@
 	    需要在config里面设置utf-8
         [gui]
 	    encoding = utf-8
+    
+    !!!如何连接github并推送本地文件
+       1.》ssh-keygen -t rsa -C "1395376546@qq.com"
+          在~/下生成.ssh文件夹，将id_rsa.pub里面的码复制到github 个人设置ssh密钥俩面
+       2.》ssh -T git@github.com 
+          验证是否连接成功“You’ve successfully authenticated, but GitHub does not provide shell access”
+       3.》找到变化的文件夹
+            git add filename 
+            git commit -m '123'
+            git checkout master
+            git push (输入自己的账号及密码) 提交成功
+
+
+
+
+
