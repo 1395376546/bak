@@ -116,6 +116,8 @@
            git commit -m "提交备注"
            git push     第二次提交远程的时候直接push
 
+           
+
 
 
 
