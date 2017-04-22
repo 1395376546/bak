@@ -104,12 +104,25 @@
           验证是否连接成功“You’ve successfully authenticated, but GitHub does not provide shell access”
        3.》找到变化的文件夹
             git add filename 
-            git commit -m '123'
+            git commit -m '123' 
             git checkout master
             git push (输入自己的账号及密码) 提交成功
         4.》!!!本地推送到服务器
                 git add filename
                 git commit -m ""
                 git push 
+        5.》文件夹提交
+           git add -a
+           git commit -m "提交备注"
+           git push     第二次提交远程的时候直接push
+
+
+
+
+
+
+
+
+
 
 
