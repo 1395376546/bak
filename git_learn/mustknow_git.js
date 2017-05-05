@@ -112,10 +112,10 @@
                 git commit -m ""
                 git push 
         5.》文件夹提交
-           git add -a
+           git add .
            git commit -m "提交备注"
            git push     第二次提交远程的时候直接push
-
+        6.》git log 显示提交日志  在英文状态下按 Q 退出 
            
 
 
