@@ -1,0 +1,230 @@
+1.箭头函数有几个使用注意点。
+  （1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。
+  （2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。
+  （3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。
+  （4）不可以使用yield命令，因此箭头函数不能用作Generator函数。
+   var a={
+   	b:{
+   		c:()=>{
+   		   console.log(this)
+   		}
+   	}
+   }
+   a.b.c() //指向window
+2.扩展运算符...
+    1.>将一个数组转为用逗号分隔的参数序列，该运算符主要用于函数调用。
+        console.log(...[1, 2, 3])
+        // 1 2 3
+        console.log(1, ...[2, 3, 4], 5)
+        // 1 2 3 4 5
+        [...document.querySelectorAll('div')]
+        // [<div>, <div>, <div>]
+    2.>替代数组的 apply 方法(由于扩展运算符可以展开数组，所以不再需要apply方法，将数组转为函数的参数了。)
+        // ES5 的写法
+        function f(x, y, z) {
+        // ...
+        }
+        var args = [0, 1, 2];
+        f.apply(null, args);
+        // ES6 的写法
+        function f(x, y, z) {
+        // ...
+        }
+        var args = [0, 1, 2];
+        f(...args);
+3. 扩展运算符的应用
+    1.>合并数组
+       扩展运算符提供了数组合并的新写法。
+        var arr1 = ['a', 'b'];
+        var arr2 = ['c'];
+        var arr3 = ['d', 'e'];
+        // ES5 的合并数组
+        arr1.concat(arr2, arr3);
+        // [ 'a', 'b', 'c', 'd', 'e' ]
+        // ES6 的合并数组
+        [...arr1, ...arr2, ...arr3]
+        // [ 'a', 'b', 'c', 'd', 'e' ]
+    2.>与解构赋值结合
+       扩展运算符可以与解构赋值结合起来，用于生成数组。
+       const [first, ...rest] = [1, 2, 3, 4, 5];
+       first // 1
+       rest // [2, 3, 4, 5]
+       const [first, ...rest] = [];
+       first // undefined
+       rest // []:
+       const [first, ...rest] = ["foo"];
+       first // "foo"
+       rest // []
+    3.>字符串
+       扩展运算符还可以将字符串转为真正的数组。
+       [...'hello']
+       // [ "h", "e", "l", "l", "o" ]
+    4.>实现了 Iterator 接口的对象
+       任何 Iterator 接口的对象，都可以用扩展运算符转为真正的数组。
+       var nodeList = document.querySelectorAll('div');
+       var array = [...nodeList];
+
+       let arrayLike = {
+       '0': 'a',
+       '1': 'b',
+       '2': 'c',
+       length: 3
+       };
+       // TypeError: Cannot spread non-iterable object.
+       let arr = [...arrayLike];
+4.属性简洁表达
+    1.>属性简洁表达
+        var foo = 'bar';
+        var baz = {foo};  ／／属性简洁表达
+        baz // {foo: "bar"}
+        // 等同于
+        var baz = {foo: foo};
+    2.> 方法简洁表达
+        var o = {
+          method() {
+            return "Hello!";
+          }
+        };
+        // 等同于
+        var o = {
+          method: function() {
+            return "Hello!";
+          }
+        };
+    3.> 综合
+       var birth = '2000/01/01';
+       var Person = {
+         name: '张三',
+         //等同于birth: birth
+         birth,
+         // 等同于hello: function ()...
+         hello() { console.log('我的名字是', this.name); }
+       };
+    4.>属性名表达式
+        let propKey = 'foo';
+        let obj = {
+          [propKey]: true,
+          ['a' + 'bc']: 123
+        };
+
+        let obj = {
+          ['h' + 'ello']() {
+            return 'hi';
+          }
+        };
+        obj.hello() /
+5.Object的方法
+  1.>Object.is就是部署这个算法的新方法。
+    它用来比较两个值是否严格相等，与严格比较运算符（===）的行为基本一致。
+        Object.is('foo', 'foo')
+        // true
+        Object.is({}, {})
+        // false
+  2.>Object.assign() //返回目标对象
+    方法用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）
+    var target = { a: 1 };
+    var source1 = { b: 2 };
+    var source2 = { c: 3 };
+    Object.assign(target, source1, source2);
+    target // {a:1, b:2, c:3}
+
+    1.>注意，如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性。
+    2.>由于undefined和null无法转成对象，所以如果它们作为参数，就会报错。
+       Object.assign(undefined) // 报错
+       Object.assign(null) // 报错
+    3.>Object.assign方法实行的是浅拷贝，而不是深拷贝。
+        var target = { a: { b: 'c', d: 'e' } }
+        var source = { a: { b: 'hello' } }
+        Object.assign(target, source)
+        // { a: { b: 'hello' } }
+    4.>Object.keys()，Object.values()，Object.entries()
+6.Symbol 保证唯一
+  ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型，
+  前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）
+
+7.Set由于 Set 结构没有键名，只有键值（或者说键名和键值是同一个值）
+    ，所以keys方法和values方法的行为完全一致。
+    1.扩展运算符和 Set 结构相结合，就可以去除数组的重复成员。
+      let arr = [3, 5, 2, 2, 5, 5];
+      let unique = [...new Set(arr)];
+      // [3, 5, 2]
+    2.使用 Set 可以很容易地实现并集（Union）、交集（Intersect）和差集（Difference）。
+        let a = new Set([1, 2, 3]);
+        let b = new Set([4, 3, 2]);
+        // 并集
+        let union = new Set([...a, ...b]);
+        // Set {1, 2, 3, 4}
+        // 交集
+        let intersect = new Set([...a].filter(x => b.has(x)));
+        // set {2, 3}
+        // 差集
+        let difference = new Set([...a].filter(x => !b.has(x)));
+        // Set {1}
+8.Map “键”的范围不限于字符串，各种类型的值（包括对象）都可以当作键
+    ，Map结构提供了“值—值”的对应，是一种更完善的 Hash 结构实现。
+    1.>如果你需要“键值对”的数据结构，Map 比 Object 更合适
+        const m = new Map();
+        const o = {p: 'Hello World'};
+        m.set(o, 'content')
+        m.get(o) // "content"
+        m.has(o) // true
+        m.delete(o) // true
+        m.has(o) // false
+
+    2.>作为构造函数，Map 也可以接受一个数组作为参数。该数组的成员是一个个表示键值对的数组。
+        const map = new Map([
+          ['name', '张三'],
+          ['title', 'Author']
+        ]);
+        map.size // 2
+        map.has('name') // true
+        map.get('name') // "张三"
+        map.has('title') // true
+        map.get('title') // "Author"
+    3.>如果对同一个键多次赋值，后面的值将覆盖前面的值。
+       const map = new Map();
+       map
+       .set(1, 'aaa')
+       .set(1, 'bbb');
+       map.get(1) // "bbb"
+    4.>注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。这一点要非常小心。
+        const map = new Map();
+
+        map.set(['a'], 555);
+        map.get(['a']) // undefined
+    5.>如果 Map 的键是一个简单类型的值（数字、字符串、布尔值），则只要两个值严格相等
+        虽然NaN不严格相等于自身，但 Map 将其视为同一个键。
+        let map = new Map();
+        map.set(-0, 123);
+        map.get(+0) // 123
+
+        map.set(true, 1);
+        map.set('true', 2);
+        map.get(true) // 1
+
+        map.set(undefined, 3);
+        map.set(null, 4);
+        map.get(undefined) // 3
+
+        map.set(NaN, 123);
+        map.get(NaN) // 123
+
+    6.>Map 转为 JSON
+        let myMap = new Map().set('yes', true).set('no', false);
+        strMapToJson(myMap)
+
+9.Proxy
+
+
+
+
+
+
+
+
+
+
+
+
+
+

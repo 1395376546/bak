@@ -1,0 +1,41 @@
+1.CSS3新增伪类
+    p:last-of-type         选择其父元素的最后的一个P元素
+    p:last-child            选择其父元素的最后子元素(一定是P才行)
+    p:first-of-type        选择其父元素的首个P元素
+    p:first-child           选择其父元素的首个p元素(一定是p才行)
+    p:only-child　　　　选择其父元素的只有一个元素(而且这个元素只能是p元素，不能有其他元素)
+    p:only-of-type　　　选择其父元素的只有一个p元素(不能有第二个P元素，其他元素可以有)　
+
+    选第N个
+    p:nth-child(n)    　　选择其父元素的第N个 刚好是p的元素
+    p:nth-last-child(n)    ..............................................从最后一个子元素开始计数
+    p:nth-of-type(n)　  选择其父元素的n个元素
+    p:nth-last-of-type(n)   ........................从最后一个子元素开始计数
+
+    用在input上
+    :enabled
+2.css盒子模型  http://www.cnblogs.com/greatluoluo/p/5906926.html
+    总宽度就是用 document.getElementsByTagName('tagNmae')[].offsetWidth;
+    在W3C模型中: 总宽度 = margin-left + border-left + padding-left + width + padding-right + border-right + margin-right
+
+    在IE模型中: 总宽度 = margin-left + width + margin-right
+
+    在CSS3中引入了box-sizing属性, 它可以允许改变默认的CSS盒模型对元素宽高的计算方式.
+
+    共包括两个选项：
+
+    content-box：标准盒模型，CSS定义的宽高只包含content的宽高
+
+    border-box：IE盒模型，CSS定义的宽高包括了content，padding和border
+
+3.定位机制
+    css有三种基本定位机制：标准文流(Normal flow)，浮动(Floats)和绝对定位(Absolute positioning)。
+
+    标准文档流
+    从左到右，从上到下，输出文档内容
+    由块及元素（从左到右撑满页面，独占一行，触碰到页面边缘时自动换行的元素，div,ul,li,dl,dt,p）和行级元素组成（能在同一行内显示并且不会改变html文档结构，如span,input）
+    浮动
+    设置为浮动的元素将会往左或者往右漂移，知道遇到阻碍-其他元素或者父级元素的边框。浮动元素不在标准文档流中占空间，但会随其后的浮动元素造成影响
+    绝对定位
+    设置为绝对定位的元素将从标准文档流中删除，不占据空间，然后通过top,left,right,bottom属性对其相对父元素进行定位。
+

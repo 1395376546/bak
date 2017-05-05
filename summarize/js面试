@@ -1,0 +1,11 @@
+1.cmd与amd
+    cmd按需加载(seajs)
+    define(function(require,export){
+        var a=require('./a.js');
+        a.dosomething();
+    });
+
+    amd依赖前置（requirejs）
+    define(['./a'],function(a){
+        a.dosomethhing();
+    });

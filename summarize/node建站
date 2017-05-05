@@ -1,0 +1,113 @@
+mongoose 官网 http://mongoosejs.com/docs/validation.html
+1.npm init
+  npm install express jade mongoose --save
+  npm install bower -g
+  bower install bootstrap
+2.必须 app.listen(port); 才会启动服务哦
+2.1 安装mongodb
+    brew update
+    brew install mongodb  注：！！！安装结束后会提示安装位置
+    brew install mongodb --with-openssl
+    sudo mkdir -p /data/db 创建文件夹
+    sudo mongod 命令启动MongoDB的服务
+    1.>创建db
+        ./mongo
+        use runoob 创建db
+        db 当前数据库
+        show dbs 所有的( 添加内容后才会显示runoob)
+            //db.runoob.insert({"name":"菜鸟教程"})
+    2.>
+        insert
+            >db.col.insert({
+                 title: 'MongoDB 教程',
+                 description: 'MongoDB 是一个 Nosql 数据库',
+                 by: '菜鸟教程',
+                 url: 'http://www.runoob.com',
+                 tags: ['mongodb', 'database', 'NoSQL'],
+                 likes: 100
+             })
+        update
+            >db.col.update({'title':'MongoDB 教程'},{$set:{'title':'MongoDB'}})
+            //多行
+            >db.col.update({'title':'MongoDB 教程'},{$set:{'title':'MongoDB'}},{multi:true})
+3.jade优点
+    提出和调用
+4.throw new Error('Most middleware (like ' + name + ') is no longer bundled
+   这是因为express 不再集成那么多 需要手动安装
+   如  npm install body-parser --save
+5.设计数据库模型
+  1.
+     schema(模式) //定义字段类型
+     model(模型)  //对传入的schema进行编译
+     documents(文档)
+  2.mongoose 模块
+  3.mongodb 数据库
+6.
+    关于net buffer stream
+    1.>buffer处理二进制
+    new Buffer("heelo imooc") 不穿参数就是utf-8
+    new Buffer("hello",'base64')
+    在stream传递的时候是以buffer的方式传递的
+
+7.mongoose的使用
+    var mongoose=require('mongoose');
+    mongoose.connect('mongodb://127.0.0.1:27017/imooc');
+8.进入系统bin文件
+    cd /usr/local/bin
+10.node 调试
+   npm intall node-inspector -g
+
+   node --debug bin/www
+   //或者
+   node --debug app.js  //app.js入口文件，有的是bin/www
+   node --debug-brk app.js //第一行加断点
+
+   node-inspector &  //一般设置
+   //或者
+   node-inspector --web-port={port} //调换端口设置
+   例：node-inspector --web-port=4000
+11.关闭端口
+    lsof -i:8080
+    // 显示如下
+    COMMAND  PID    USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+    node    9277 apple-w   13u  IPv4 0x48929d8a9d06a921      0t0  TCP *:http-alt (LISTEN)
+    //关闭
+    kill 9277
+12.中间件next
+
+    function validToken(req, res, next){
+        var db = req.db;
+        var userToken = req.query.token;
+        db.getConnection(function(err,conn){
+            if(err){
+                sendData(req,res,next,conn,err);
+            }else{
+                db.query('SELECT * FROM user WHERE user_token = '+userToken+'',function(err,row){
+                    if(err){
+                        sendData(req,res,next,conn,err);
+                    }else{
+                        if(row.length == 0){
+                            sendData(req,res,next,conn,请登录);
+                        }else{
+                            next();
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    router.post('/change-project',validToken,function(req,res,next){
+        var db = req.db;
+        var token = req.query.token;
+        var id = req.query.id;
+        var projectStatus = req.query.status;
+        var data = {
+            status : false,
+            message :
+        }
+    })
+13.nodejs模块开发及发布
+    1.>npm adduser (写入自己的名称、密码、邮箱)
+       liuwei ljw123456 1395376546@qq.com
+    2.>进入模块根目录 执行 npm publish

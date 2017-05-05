@@ -1,0 +1,102 @@
+1.>组件中getters报错（http://www.w2bc.com/article/190262）
+    computed:{
+          ...mapGetters(["common_data"]),
+          com_a(a){
+            console.log(a);
+            return 2+this.$store.state.a;
+          }
+
+    },
+    解决方法
+    1.>npm install babel-plugin-transform-object-rest-spread
+    2.  到根目录去修改.babelrc文件
+        {
+          "presets": [
+            ["es2015", { "modules": false }]
+          ],
+          "plugins": ["transform-object-rest-spread"] //增加这一行
+        }
+    3.> 重启
+        npm install dev
+2.
+    const store = new Vuex.Store({
+      state: {
+        count: 0
+      },
+      mutations: {
+        increment (state) {
+          state.count++
+        }
+      },
+      actions: {
+        increment (context) {
+          context.commit('increment')
+        },
+        //或者
+        increment ({ commit }) {
+            commit('increment')
+          }
+      }
+    })
+3.Action()
+    Action 通常是异步的，所以我们如何知道一个 action 何时完成？更重要的是，
+    我们如何组合多个 action 一起操作复杂的异步流程？
+    第一件事是知道 store.dispatch 返回『action 回调函数被触发后的返回值』，
+    所以你可以在 action 中返回一个 Promise 对象。
+    actions: {
+      actionA ({ commit }) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            commit('someMutation')
+            resolve()
+          }, 1000)
+        })
+      },
+      //在另一个action调用
+      actionB ({ dispatch, commit }) {
+          return dispatch('actionA').then(() => {
+            commit('someOtherMutation')
+          })
+        }
+    }
+    调用方法(目前就两种)
+        直接调用
+        store.dispatch('actionA').then(() => {
+          // ...
+        })
+        组件中调用
+        methods:{
+            test:function(){
+                this.$store.dispatch("actionName");
+            }
+        }
+
+4.dispatch分发
+    1.>store实例化直接调用
+        // dispatch 传入 payload
+        store.dispatch('incrementAsync', {
+          amount: 10
+        })
+        // dispatch 传入一个对象
+        store.dispatch({
+          type: 'incrementAsync',
+          amount: 10
+        })
+    2.>组件中调用
+        import { mapActions } from 'vuex'
+        export default {
+          // ...
+          methods: {
+            //直接调用方法名和类型名一致
+            ...mapActions([
+              'increment' // 映射 this.increment() 到 this.$store.dispatch('increment')
+            ]),
+            add:function(){
+                this.$store.dispatch("increment");
+            },
+            //对象调用，键为方法名，值为类型
+            ...mapActions({
+              add: 'increment' // map this.add() to this.$store.dispatch('increment')
+            })
+          }
+        }

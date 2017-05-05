@@ -1,0 +1,73 @@
+1.JSX 允许在模板中插入数组，数组会自动展开所有成员：
+    var arr = [
+      <h1>菜鸟教程</h1>,
+      <h2>学的不仅是技术，更是梦想！</h2>,
+    ];
+    ReactDOM.render(
+      <div>{arr}</div>,
+      document.getElementById('example')
+    );
+2.React 可以渲染 HTML 标签 (strings) 或 React 组件 (classes)。
+  要渲染 HTML 标签，只需在 JSX 里使用小写字母的标签名。
+    var myDivElement = <div className="foo" />;
+    ReactDOM.render(myDivElement, document.getElementById('example'));
+3.React 的 JSX 使用大、小写的约定来区分本地组件的类和 HTML 标签。
+    var MyComponent = React.createClass({/*...*/});
+    var myElement = <MyComponent someProperty={true} />;
+    ReactDOM.render(myElement, document.getElementById('example'));
+4.state
+    es5写法
+    var LikeButton = React.createClass({
+        getInitialState: function() {
+          return {liked: false};
+        },
+        render: function() {
+          var text = this.state.liked ? '喜欢' : '不喜欢';
+          return (
+            <p onClick={this.handleClick}>
+              你<b>{text}</b>我。点我切换状态。
+            </p>
+          );
+        }
+    });
+    ReactDOM.render(
+       <LikeButton />,
+       document.getElementById('example')
+    );
+    es7写法
+    class MyComponent extends React.Component{
+      static defaultProps={
+        name:"SunnyChuan",
+        age:22
+      }
+      state={
+         isMarried:false
+      }
+      static propTypes={
+        name:React.PropTypes.string.isRequired,
+        age:React.PropTypes.number.isRequired
+      }
+    }
+    ！！！注： 在事件绑定中注意this的指向 用箭头函数最保险
+
+    <button onClick={()=>this.handleChange()}>改变app中的state</button>
+5.子组件改变父组件状态(通过prop向子组件传递函数)
+    父组件中
+        handleChange(count){
+            this.setState({count:count});
+        }
+
+        <Demo setState={(count)=>this.handleChange(count)} state={this.state}/>
+    子组件中
+        setParState(){
+                this.props.setState(666);
+                this.state.count=666;
+            }
+
+        <button onClick={()=>this.setParState()}>改变父组件状态机</button>
+
+
+
+
+
+

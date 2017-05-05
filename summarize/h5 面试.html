@@ -1,0 +1,135 @@
+地址：http://hovertree.com/h/bjaf/ge6w0q9h.htm
+1.h5声明
+    <!doctype html>
+2.utf-8
+    <meta charset='utf-8'>
+3.音频视频
+    //为了浏览器兼容，需要多个视频或者音频的格式
+    //视频
+    <!-- 跟 audio 元素一样 -->
+    <video width="320" height="240" controls="controls">
+        <source src="movie.ogg" type="video/ogg">
+        <source src="movie.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    //音频
+    <!-- audio 元素允许多个 source 元素。source 元素可以链接不同的音频文件。
+    浏览器将使用第一个可识别的格式 -->
+    <audio controls="controls">
+        <source src=”hovertree.mp3″ type=”audio/mpeg”>
+        <source src=”hovertree.ogg″ type=”audio/ogg”>
+        Your browser does’nt support audio embedding feature.
+    </audio>
+
+    //其他多媒体
+    <embed src="hewenqi.swf" />
+4.HTML5 存储类型有什么区别？
+
+    HTML5 能够本地存储数据，在之前都是使用 cookies 使用的。HTML5 提供了下面两种本地存储方案：
+
+    localStorage - 没有时间限制的数据存储，数据永远不会过期，关闭浏览器也不会丢失
+    sessionStorage - 针对一个 session 的数据存储，同一个会话中的页面才能访问
+                并且当会话结束后数据也随之销毁。
+5.新增表单属性
+    <input type="email">
+    <input type="tel">
+    <input type="color">
+    <input type="url">
+    <input type="range">
+    <input type="search">
+6.新增元素
+    <header></header>
+    <footer></footer>
+    <nav></nav>
+    <section></section>
+    <article></article>
+    <canvas></canvas>
+    <video></video>
+    <audio></audio>
+7.h5新增api
+    1：canvas，不用多说，可以画出很多绚丽的图形，甚至可以直接做出伪3D游戏。
+
+    2：媒体控制，也很好理解(直译就是回放功能，假如只用html5.0以下的标签写，以前的音乐播放是不可能实现滚动条的。)
+
+    3：离线网页程序，可以把资源文件完全缓存在客户端，并且通过js的一些方法清空缓存
+
+    4：文档编辑，应该是更好的支持对文档的编辑。
+
+    5：拖动，可以将文件拖动到某些区域上传
+
+    6：跨文档请求，websocket，一种更加高效的通讯方式
+
+    7：历史管理，可以通过js管理和插入历史记录
+
+    8：MIME头自定义
+
+    9：客户端数据存储，localstoage sessionstoage
+
+    10：地理位置共享
+
+    11：本地数据库
+
+    12：索引数据库
+8.HTML5 应用程序缓存和浏览器缓存有什么区别？
+    HTML5 引入了应用程序缓存，这意味着 web 应用可进行缓存，并可在没有因特网连接时进行访问。
+
+    应用程序缓存为应用带来三个优势：
+
+    　　离线浏览 - 用户可在应用离线时使用它们
+
+    　　速度 - 已缓存资源加载得更快
+
+    　　减少服务器负载 - 浏览器将只从服务器下载更新过或更改过的资源。
+
+    实现借助于 manifest 文件
+
+    <html manifest="demo.appcache">
+9.doctype 作用？严格模式与混合模式如何区分？它们有何意义？
+
+    <!DOCTYPE> 声明可告知浏览器文档使用哪种 HTML 或 XHTML 规范。
+
+    在标准模式中，浏览器根据规范呈现页面；在混杂模式中，页面以一种比较宽松的向后兼容的方式显示
+10.行内元素有哪些？块级元素有哪些？空（void）元素有哪些？
+    1.块元素
+        div ul  li dl dt dd p h1-h5 table body
+    2.行内元素
+        span b i  input textarea  img a font strong
+    3.空元素
+        br hr img input
+11.浏览器的内核分别是什么？
+
+    Trident(IE内核)，是微软开发的一种排版引擎。
+
+    Gecko(Firefox内核)，是一套开放源代码的、以C++编写的网页排版引擎。
+
+    Webkit(Safari内核,Chrome内核原型,开源)。
+12.常见兼容性问题及解决方案？
+
+    1.清除图片下方出现几像素的空白间隙
+
+    img{display:block;}
+    img{vertical-align:top;}
+    2.不同浏览器的标签默认的外边距和内边距不同
+
+    *｛margin:0;padding:0｝
+13.异步加载js方式
+    1.defer（只支持IE）
+
+    <script type="text/javascript" defer="defer">
+        alert('hovertree');
+    </script>
+
+
+    2.async规定一旦脚本可用，则会异步执行，只适用于外部脚本
+
+        <script type="text/javascript" src="hovertree.js" async="async"></script>
+
+    3.创建script，插入到DOM中，加载完毕后callBack
+        (function(){
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = "http://code.jquery.com/jquery-1.7.2.min.js";
+        var tmp = document.getElementsByTagName('script')[0];
+        tmp.parentNode.insertBefore(s, tmp);
+        })();

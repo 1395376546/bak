@@ -1,0 +1,48 @@
+1.>逻辑支持
+    所有使用 <% %> 括起来的内容都会被编译成 Javascript，
+    你可以在模版文件中像写 js 一样 Coding，也允许你声明变量，
+    作用域就是当前模版，因为一个模版会被编译成一个 Javascript 函数。
+    <% var name = "littledu" %>
+    <div>
+    Hello, My Name is <%-name %>
+    </div>
+
+    <ul>
+        <% for(var i=0;i<10;i++){%>
+            <li><% i %></li>
+        <%}%>
+    </ul>
+2.>文件引用 includes
+3.>快速的引用 CSS 文件，并附上注释线上 CSS 绝对路径，便于下游前端使用。
+    <head>
+        <title>页面标题</title>
+        <%- css("style-workflow.css") %>
+    </head>
+4.>img() 占位图
+    <%- img(200, 400, 'block__img') %>
+5.>text() 占位文本
+    <span><%- text(10, 3) %></span>
+6.><% %>标签含义
+    .<% code %>
+    无缓冲的条件语句元素
+
+    .<%= code %>
+    转义HTML，该code并且会打印出来
+
+    .<%- code %>
+    非转义的buffering，该code并且会打印出来
+
+    .<% include file %>
+    内嵌别的文件
+
+    .<% layout(file) -%>
+    指定布局文件
+
+    .<% script(file) -%>
+    包含js脚本文件
+
+    .<% stylesheet(file) -%>
+    包含css文件
+
+    .<% block(code, code) -%>
+    指定块内容
