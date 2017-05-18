@@ -116,6 +116,7 @@
            git commit -m "提交备注"
            git push     第二次提交远程的时候直接push
         6.》git log 显示提交日志  在英文状态下按 Q 退出 
+	7.》c+shift+. 控制显示隐藏文件 
            
 
 
